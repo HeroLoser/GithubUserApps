@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,16 +31,11 @@ import java.util.ArrayList;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     public ArrayList<Users> mData = new ArrayList<>();
-    public String nameExtra;
 
     public void setmData(ArrayList<Users> users){
         mData.clear();
         mData.addAll(users);
         notifyDataSetChanged();
-    }
-
-    public void getName(String username){
-        nameExtra = username;
     }
 
     @NonNull
@@ -63,16 +59,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         ImageView avatarList;
         TextView nameList;
         TextView typeList;
-        LinearLayout linearLayout;
+        ConstraintLayout linearLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             avatarList = itemView.findViewById(R.id.img_avatar_item);
             nameList = itemView.findViewById(R.id.txt_name_item);
             typeList = itemView.findViewById(R.id.txt_location_item);
-            linearLayout = itemView.findViewById(R.id.linear_layout_item);
+            linearLayout = itemView.findViewById(R.id.constraint_layout);
         }
 
-        void bind(Users users){
+        void bind(final Users users){
             nameList.setText(users.getName());
             typeList.setText(users.getType());
 //            avatarList.setImageURI(Uri.parse(users.getAvatar()));
@@ -84,7 +80,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
-                    bundle.putString("name", nameExtra);
+                    bundle.putString("name", users.getName());
                     Intent i = new Intent(v.getContext(), DetailSub2.class);
                     i.putExtras(bundle);
                     v.getContext().startActivity(i);

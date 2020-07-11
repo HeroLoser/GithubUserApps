@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
                     if (query != null){
                         loading(true);
                         setUsersSearch(query);
-                        adapter.getName(query);
                     }return true;
                 }
 
